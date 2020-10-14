@@ -19,3 +19,5 @@ target = rand(100) + 1
 num_guesses = 0
 
 puts "You've got #{10 - num_guesses} guesses left."
+print "Make a guess: "
+guess = gets.to_i
