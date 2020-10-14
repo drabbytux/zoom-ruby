@@ -21,21 +21,26 @@ num_guesses = 0
 # Track whether the player has guessed correctly.
 guessed_it = false
 
-puts "You've got #{10 - num_guesses} guesses left."
-print "Make a guess: "
-guess = gets.to_i
+until num_guesses == 10 || guessed_it
 
+  puts "You've got #{10 - num_guesses} guesses left."
+  print "Make a guess: "
+  guess = gets.to_i
 
-# Compare the guess to the target.
-# Print the appropriate message
-if guess < target
-    puts "Ooops! your guess was LOW."
-elsif guess > target
-  puts "Ooops! Your guess was too damn HIGH."
-elsif guess == target 
-  puts "Good Job, #{name}!"
-  puts "You guess the number if #{num_guesses} guesses!"
-  guessed_it = true
+  num_guesses += 1
+
+  # Compare the guess to the target.
+  # Print the appropriate message
+  if guess < target
+      puts "Ooops! your guess was LOW."
+  elsif guess > target
+    puts "Ooops! Your guess was too damn HIGH."
+  elsif guess == target 
+    puts "Good Job, #{name}!"
+    puts "You guess the number if #{num_guesses} guesses!"
+    guessed_it = true
+  end
+
 end
 
 # if player ran out of turns, tell them what the number was.
