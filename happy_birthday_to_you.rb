@@ -9,9 +9,12 @@ count = 1
 while count <=4
   print "Happy birthday "
   if( count == 3 )
-    print "dear #{name}\n"
+    print "dear #{name}"
   else
-    print "to you\n"
+    print "to you"
+    print count==4 ? '.':""
   end
+
+  print "\n"
   count += 1
 end
