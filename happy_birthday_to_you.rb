@@ -3,15 +3,21 @@
 # David Little
 # Oct 14 2020
 
-puts "What's your name?"
+print "What's your name? "
 name = gets.chomp
 count = 1
-while count <=4
-  print "Happy birthday "
-  if( count == 3 )
-    print "dear #{name}\n"
+str_out = ""
+
+until count > 4
+  str_out += "Happy birthday "
+
+  case count
+  when 3
+    str_out += "dear #{name}\n"
   else
-    print "to you\n"
+    str_out += "to you\n"
   end
   count += 1
 end
+
+puts str_out
