@@ -13,10 +13,13 @@ until count > 4
 
   case count
   when 3
-    str_out += "dear #{name}\n"
+    str_out += "dear #{name}"
   else
-    str_out += "to you\n"
+    str_out += "to you"
+    str_out += count==4 ? '.':""
   end
+
+  str_out += "\n"
   count += 1
 end
 
