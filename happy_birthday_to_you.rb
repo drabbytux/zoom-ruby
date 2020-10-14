@@ -3,7 +3,7 @@
 # David Little
 # Oct 14 2020
 
-puts "What's your name?"
+print "What's your name?"
 name = gets.chomp
 count = 1
 while count <=4
