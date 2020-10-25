@@ -20,6 +20,21 @@ def verse(number)
   return str_verse
 end
 
-number_of_bottles = 1
+def getNum
+  num = gets.chomp
+  if num
+    return num.to_f if num == 0
+    if num =~ /\A(\d+)\z/
+      return num.to_i
+    end
+  end
+end
+
+
+number_of_bottles = nil
+while !number_of_bottles do
+  print "How many beers, hosehead? "
+  number_of_bottles = getNum
+end
 (number_of_bottles).downto(1) {|number| puts verse(number)}
 puts Last_verse
