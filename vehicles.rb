@@ -32,7 +32,14 @@ class Truck < Vehicle
 end
 
 class Motorcycle < Vehicle
+  def steer
+    puts "Turn front wheel."
+  end
 end
+
+motorcycle = Motorcycle.new
+motorcycle.steer
+motorcycle.accelerate
 
 truck = Truck.new
 truck.accelerate
