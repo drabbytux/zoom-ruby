@@ -35,16 +35,29 @@ end
 
 
 class Bird < Animal
+
   def talk
     puts "#{@name} says Chirp! Chirp!"
   end
+
 end
 
 
 class Cat < Animal
+
   def talk
     puts "#{@name} says Meow!"
   end
+  
+end
+
+class Armadillo < Animal
+
+  def move(destination)
+    puts "#{@name} unrolls!"
+    puts "#{name} runs to the #{destination}."
+  end
+
 end
 
 
