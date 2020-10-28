@@ -7,7 +7,9 @@ class Employee
   end
 
   def name=(name)
-    # code to validate
+    if name == ""
+      raise "Name can't be blank!"
+    end
     @name = name
   end
 
@@ -26,11 +28,10 @@ class SalariedEmployee < Employee
 
   def salary=(salary)
     # Code to validate
-    if salary >= 0
-      @salary = salary
-    else
-      raise "No salary set"
+    if salary < 0
+      raise "A salary of #{salary} isn't valid."      
     end
+    @salary = salary
   end
 
   def print_pay_stub
@@ -41,7 +42,7 @@ class SalariedEmployee < Employee
   end
 end
 
-class HourlyEmplyee < Employee
+class HourlyEmployee < Employee
 
   attr_reader :hourly_wage, :hours_per_week
 
@@ -74,9 +75,16 @@ class HourlyEmplyee < Employee
     puts "Pay This Period: #{formatted_pay}"
   end
 
-  def turn_into_cashier
-      self.hourly_wage = 12.75
-      self.hours_per_week = 25
+  def self.security_guard(name)
+    HourlyEmployee.new(name, 19.25, 30)
+  end
+
+  def self.cashier(name)
+    HourlyEmployee.new(name, 12.75, 25)
+  end
+
+  def self.janitor(name)
+    HourlyEmployee.new(name, 10.50, 20)
   end
 end
 
@@ -86,19 +94,21 @@ end
 salaried_employee = SalariedEmployee.new("Jane Doe", 50000)
 salaried_employee.print_pay_stub
 
-hourly_employee = HourlyEmplyee.new("John Smith", 14.97, 30)
+hourly_employee = HourlyEmployee.new("John Smith", 14.97, 30)
 hourly_employee.print_pay_stub
 
-ivan = HourlyEmplyee.new("Ivan Stokes")
-ivan.turn_into_cashier
+ivan = HourlyEmployee.cashier("Ivan Stokes")
+
+harold= HourlyEmployee.new("Harold Nguyen", 12.75, 25)
+tamara = HourlyEmployee.new("Tamara Wells", 12.75, 25)
+susie = HourlyEmployee.new("Susie Powell", 12.75, 25)
+
+edwin = HourlyEmployee.janitor("Edwin Burgess")
+ethel = HourlyEmployee.new("Ethel Harris", 10.50, 20)
+
+angela = HourlyEmployee.security_guard("Angela Matthews")
+stewart = HourlyEmployee.new("Stewart Sanchez", 19.25, 30)
+
+angela.print_pay_stub
+edwin.print_pay_stub
 ivan.print_pay_stub
-
-harold= HourlyEmplyee.new("Harold Nguyen", 12.75, 25)
-tamara = HourlyEmplyee.new("Tamara Wells", 12.75, 25)
-susie = HourlyEmplyee.new("Susie Powell", 12.75, 25)
-
-edwin = HourlyEmplyee.new("Edwin Burgess", 10.50, 20)
-ethel = HourlyEmplyee.new("Ethel Harris", 10.50, 20)
-
-angela = HourlyEmplyee.new("Angela Matthews", 19.25, 30)
-stewart = HourlyEmplyee.new("Stewart Sanchez", 19.25, 30)
