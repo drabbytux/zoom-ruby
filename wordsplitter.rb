@@ -1,6 +1,6 @@
 class WordSplitter
 
-    include Enumerable
+  include Enumerable
 
   attr_accessor :string
 
