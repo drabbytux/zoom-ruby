@@ -15,7 +15,3 @@ class BathTub < Vessel
   end
 
 end
-
-b = BathTub.new(1000)
-b.run_bubble_bath
-b.empty

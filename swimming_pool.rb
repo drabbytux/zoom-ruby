@@ -20,7 +20,3 @@ class SwimmingPool < Vessel
   end
 
 end
-
-s = SwimmingPool.new(200000)
-s.clean_pool
-s.move(30)

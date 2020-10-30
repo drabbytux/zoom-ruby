@@ -1,10 +1,12 @@
 require_relative "vessel"
 require_relative "coffee_cup"
-require_relative "bucket"
+require_relative "bathtub"
 require_relative "swimming_pool"
 
-# __________ VESSEL TESTS ___________ #
+# _____________________ #
 
+# Superclass Vessel TESTS
+puts "Vessel test ------------------------ "
 v = Vessel.new(10)
 v.material = "glass"
 test = ['coke', 'orange crush']
@@ -14,3 +16,23 @@ v.fill(test2, 7)
 v.move(2)
 puts v.contents
 v.empty
+
+
+# Subclass Bathtub TESTS
+puts "Bathtub test ------------------------ "
+b = BathTub.new(1000)
+b.run_bubble_bath
+b.empty
+
+# Subclass CoffeeCup TESTS
+puts "CoffeeCup test ------------------------ "
+c = CoffeeCup.new(20)
+c.fill("Coffee", "fill")
+c.have_a_sip
+c.empty
+
+# Subclass SwimmingPool TESTS
+puts "SwimmpingPool test ------------------------ "
+s = SwimmingPool.new(200000)
+s.clean_pool
+s.move(30)
