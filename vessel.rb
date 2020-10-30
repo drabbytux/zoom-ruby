@@ -41,7 +41,11 @@ class Vessel
         end
       end
     else
-      puts "No amount was specified."
+      if( amount == "fill")
+        @volume_filled = @volume_max
+      else
+        puts "No amount was specified."
+      end
     end
   end
 

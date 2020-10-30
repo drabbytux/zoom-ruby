@@ -1,8 +1,3 @@
-#Exist in their own .rb file
-#Have at least 1 additional attribute
-#Have at least 1 additional method.
-#Overwrite at least 1 parent method.
-
 require_relative "vessel"
 
 class CoffeeCup < Vessel
@@ -10,7 +5,7 @@ class CoffeeCup < Vessel
 
   def have_a_sip
     if @volume_filled != 0
-      @contents = @contents - 1
+      @volume_filled = @volume_filled - 2
       puts "Mmmmm good!"
     else
       puts "Empty cup! Filler up Joe!"
@@ -19,7 +14,12 @@ class CoffeeCup < Vessel
 
   def empty
     super
-    puts "Oh well. It was good when it lasted! [places cup in sink]"
+    puts "Oh well. It was good when it lasted! [places cup in sink] Back to work!!!"
   end
   
 end
+
+c = CoffeeCup.new(20)
+c.fill("Coffee", "fill")
+c.have_a_sip
+c.empty

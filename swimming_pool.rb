@@ -10,8 +10,9 @@ class SwimmingPool < Vessel
   end
 
   def clean_pool
-    @filter_system = "on"
+    @filter_system_status = "on"
     puts "Filter system is now #{filter_system_status} scooping the leaves from the bottom and adding some chlorine!"
+    @filter_system_status = "off"
   end
 
   def move(position_moved_in_centimeters = 0)
@@ -21,3 +22,5 @@ class SwimmingPool < Vessel
 end
 
 s = SwimmingPool.new(200000)
+s.clean_pool
+s.move(30)
