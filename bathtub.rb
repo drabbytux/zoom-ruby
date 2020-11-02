@@ -1,7 +1,8 @@
 require_relative "vessel"
 
 class BathTub < Vessel
-
+  
+  include HumanOccupancy
   attr_accessor :accessable
   
   def run_bubble_bath

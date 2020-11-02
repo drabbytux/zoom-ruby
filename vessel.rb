@@ -1,3 +1,5 @@
+require_relative "mixins"
+
 class Vessel
 
   attr_reader :volume_max, :material, :contents

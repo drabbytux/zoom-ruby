@@ -2,6 +2,8 @@ require_relative "vessel"
 
 class SwimmingPool < Vessel
 
+  include HumanOccupancy
+  include Sealable
   attr_accessor :filter_system_status
 
   def initialize(volume_max)

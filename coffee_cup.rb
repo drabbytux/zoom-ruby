@@ -1,6 +1,7 @@
 require_relative "vessel"
 
 class CoffeeCup < Vessel
+  include ContainsConsumable
   attr_accessor :cup_colour
 
   def have_a_sip
@@ -18,8 +19,3 @@ class CoffeeCup < Vessel
   end
   
 end
-
-c = CoffeeCup.new(20)
-c.fill("Coffee", "fill")
-c.have_a_sip
-c.empty
