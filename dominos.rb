@@ -1,11 +1,12 @@
 class Domino
 
-  attr_accessor :domino_value
+  attr_accessor :domino_value, :domino_halves_list
 
   def initialize
     @dot = "*"
     @space = " "
     @domino_value = 0
+    @domino_halves_list = []
   end
 
   def half_value(top_or_bottom)
@@ -13,6 +14,12 @@ class Domino
       @domino_value > 6 ? @domino_value - 6 : 0
     else
       @domino_value > 6 ? 6 : @domino_value
+    end
+  end
+
+  def swap_tops_and_bottoms()
+    domino_halves_list.map do |domino|
+      domino.split("-").reverse.join("-")
     end
   end
 
@@ -69,6 +76,19 @@ class Domino
     end
   end
 
+  def list_to_s
+    if( domino_halves_list.size > 0)
+      domino_halves_list.each do |domino|
+        d = domino.split("-")
+        puts "---"
+        puts get_domino_half(d[0].to_i)
+        puts "~~~"
+        puts get_domino_half(d[1].to_i)
+        puts "///\n\n"
+      end
+    end
+  end
+
 end
 
 
@@ -77,5 +97,10 @@ end
 dom = Domino.new
 dom.domino_value = 8
 dom.to_s
+# dom.output_entire_set
 
-dom.output_entire_set
+# Make a list, print it and reverse it! And print it again!
+dom.domino_halves_list = ["2-4","6-1","1-2","5-6"]
+dom.list_to_s
+dom.swap_tops_and_bottoms  # reverse top/bottom!
+dom.list_to_s
