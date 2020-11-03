@@ -89,6 +89,11 @@ class Domino
     end
   end
 
+  def find_dominoes_with( number_to_find )
+    arr_found_items = domino_halves_list.find_all {|d| d.include? number_to_find.to_s }
+    puts arr_found_items
+  end
+
 end
 
 
@@ -104,3 +109,5 @@ dom.domino_halves_list = ["2-4","6-1","1-2","5-6"]
 dom.list_to_s
 dom.swap_tops_and_bottoms  # reverse top/bottom!
 dom.list_to_s
+
+dom.find_dominoes_with(6)
