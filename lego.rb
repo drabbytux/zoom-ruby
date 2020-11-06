@@ -14,7 +14,7 @@ class LegoHat
 
   # to_s method sends back the colour and style of the hat. Unfortunelty, as it's written here, it attempts to use an uninitialized/defined "size_word" attribute/function call. Also, the colour should utilize the at(@) symbol to focus on object's colour attribute
   def to_s
-    "a #{size_word} #{colour} #{@style}"
+    "a #{size} #{colour} #{@style}"
   end
 end
 
