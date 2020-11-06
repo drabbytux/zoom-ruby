@@ -142,9 +142,4 @@ class LegoMinifigure
 end
 
 
-## TESTING ##
-#h = LegoHat.new("medium","blue","bully")
-#i1 = LegoItem.new("Sword",12)
-#i2 = LegoItem.new("coffee",2)
-#p = LegoMinifigure.new("charles",h,i1,i2)
-#puts p
+

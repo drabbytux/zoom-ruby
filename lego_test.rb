@@ -19,6 +19,7 @@ class TestLego < Minitest::Test
 
     assert_equal(expected,actual)
   end
+
 =end
 
   def test_hat_set_style_properly
@@ -73,7 +74,7 @@ class TestLego < Minitest::Test
   end
 =end
 
-  # - - - - Lego Figure Tests - - - - -  -#
+  # - - - - - - Lego Figure Tests - - - - -  -#
 
    # Test FAILED - Method/attribute "size_word" within LegoHat class not found, fails test
 =begin   
