@@ -1,9 +1,10 @@
 class Textogram
 
-  attr_accessor :word_hash
+  attr_accessor :word_hash, :charachters_only
 
   def initialize
     @word_hash = Hash.new
+    @charachters_only = true
   end
 
   def start_it(is_case_sensitive = nil, include_non_alphanumberic = nil, words = nil, graph_char ='*')
@@ -21,7 +22,11 @@ class Textogram
 
   def create_hash
     apply_word_restrictions
-    @word_hash = Hash[@choice_word.delete(' ').split('').group_by{|char| char}.map{|key, val| [key, val.size]}].sort_by {|k, v|[-k, v]}
+    if @charachters_only
+     @word_hash = Hash[@choice_word.delete(' ').split('').group_by{|char| char}.map{|key, val| [key, val.size]}].sort_by {|k, v|[-k, v]}
+    else
+      @word_hash = Hash[@choice_word.split(' ').group_by{|char| char}.map{|key, val| [key, val.size]}]
+    end
   end
 
   def apply_word_restrictions
@@ -30,7 +35,11 @@ class Textogram
     end
 
     if @choice_include_non_alphanumberic == 'n'
+      if charachters_only
       @choice_word.gsub!(/\W/,'')
+      else
+        @choice_word.gsub!(/\W^\s/,'')
+      end
     end
   end
 
@@ -58,9 +67,20 @@ end
 
 ## _________R U N  T I M E_____________ ##
 
+
 t = Textogram.new
 t.start_it('n','y',"HELLO World!",'*')
 
 t.start_it('y','y',"HELLO World!",'*')
 
 t.start_it('y','n',"HELLO World!",'*')
+
+t.start_it('y','n',"",'*')
+
+# - - - NEW - - - - #
+
+t.charachters_only = false # Do words instead!
+t.start_it('y','n',"HELLO World Another one and another one and another...!",'*')
+
+str_file = File.read('textogram_text_example.txt')
+t.start_it('y','n',str_file,'*')
