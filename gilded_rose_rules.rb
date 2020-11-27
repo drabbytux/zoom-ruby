@@ -1,16 +1,22 @@
-quality_increment   = 1
-sell_in_increment   = 1
+module ItemRules
+# Increment value Rules
+  quantity_increment_rule = ->(item) {
+      quality_increment = (item.sell_in < 0) ? quality_increment * 2 : 1
+  }
 
-# quantity rule 1: quality degrades twice as fast if the date has passed
-  quality_increment = (item.sell_in < 0) ? quality_increment * 2 : 1
+  sell_in_increment_rule = ->(item) {
+    sell_in_increment = 1
+  }
 
-# quantity rule 2: every item reduces quality
-# and
-# quantity rule 3: The Quality of an item is never negative
-  item.quality = (item.quality > 0) ? item.quality - quality_increment : item.quality
+# Main Quantity value rules
+  quantity_rule = ->(item) {
+    item.quality = (item.quality > 0) ? item.quality - quality_increment : item.quality
+  }
 
-# sell_in rule 1: sell_in by reduces it's increment value
-  item.sell_in = item.sell_in - sell_in_increment
+# Main Sell in rule
+  sell_in_rule = ->(item) {
+    item.sell_in = item.sell_in - sell_in_increment
+  }
 
 # general rule 5: The Quality of an item is never more than 50
   # --
@@ -37,6 +43,7 @@ sell_in_increment   = 1
     end
 
 
+end
 
 =begin
 
@@ -86,55 +93,4 @@ Backstage passes to a TAFKAL80ETC concert, 9, 50
 Backstage passes to a TAFKAL80ETC concert, 4, 50
 Conjured Mana Cake, 2, 4
 
-=end
-
-
-
-=begin
-quality_increment_amount = item.name == 'Conjured Mana Cake'? 2 : 1
-
-
-      if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
-        if item.quality > 0
-          if item.name != "Sulfuras, Hand of Ragnaros"
-            item.quality = item.quality - quality_increment_amount
-          end
-        end
-      else
-        if item.quality < 50
-          item.quality = item.quality + quality_increment_amount
-          if item.name == "Backstage passes to a TAFKAL80ETC concert"
-            if item.sell_in < 11
-              if item.quality < 50
-                item.quality = item.quality + quality_increment_amount
-              end
-            end
-            if item.sell_in < 6
-              if item.quality < 50
-                item.quality = item.quality + quality_increment_amount
-              end
-            end
-          end
-        end
-      end
-      if item.name != "Sulfuras, Hand of Ragnaros"
-        item.sell_in = item.sell_in - 1
-      end
-      if item.sell_in < 0
-        if item.name != "Aged Brie"
-          if item.name != "Backstage passes to a TAFKAL80ETC concert"
-            if item.quality > 0
-              if item.name != "Sulfuras, Hand of Ragnaros"
-                item.quality = item.quality - quality_increment_amount
-              end
-            end
-          else
-            item.quality = item.quality - item.quality
-          end
-        else
-          if item.quality < 50
-            item.quality = item.quality + quality_increment_amount
-          end
-        end
-      end
 =end
