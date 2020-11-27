@@ -1,73 +1,68 @@
-module ItemRules
-  # Increment value Rules
-    quality_increment_rule = ->(item) {
-      quality_increment = (item.sell_in < 0) ? quality_increment * 2 : 1
-    }
-  
-    sell_in_increment_rule = ->(item) {
-      sell_in_increment = 1
-    }
-  
-  # Main Quality value rules
-    quality_rule = ->(item) {
-      item.quality = (item.quality > 0) ? item.quality - quality_increment : item.quality
-    }
-  
-  # Main Sell in rule
-    sell_in_rule = ->(item) {
-      item.sell_in = item.sell_in - sell_in_increment
-    }
-  
-  # item specific override rule 1:"Aged Brie"
-    quality_rule_aged_brie = ->(item) {
-      item.quality = (item.quality < 50) ? item.quality + quality_increment : item.quality
-    } 
-  
-  # item specific override rule 2: "Sulfuras", being a legendary item, never has to be sold or decreases in Quality
-    # quality rule overide
-      quality_rule_sulfuras = ->(item) {
-        item.quality = item.quality
-      }
-    # sell_in rule overide
-      sell_in_rule_sulfuras = ->(item) {
-        item.sell_in = item.sell_in
-      }
-  
-  # item specific override rule 3: "Backstage passes", like aged brie, increases in Quality as its SellIn value approaches; Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but Quality drops to 0 after the concert
-    # quality rule override
-      quality_rule_backstage_passes = ->(item) {
-        if item.sell_in < 0
-          item.quality = 0
-        else
-          if(item.sell_in <=10)
-            quality_increment = (item.sell_in <=5) ? 3 : 2
-          end
-          item.quality = (item.quality < 50) ? item.quality + quality_increment : item.quality
-        end
-      }
-
-  end
-
-
 class GildedRose
-  include ItemRules
   def initialize(items)
     @items = items
+    @quality_increment = 1
+    @sell_in_increment = 1
+    generate_rules
   end
 
   def update_quality()
     @items.each do |item|
-      item.quality = apply_quality_rules(item)
-      item.sell_in = apply_sell_in_rules(item)
+      item.quality = apply_generic_quality_rules(item) if !quality_exemption? item
+      item.sell_in = apply_generic_sell_in_rules(item) if !sell_in_exemption? item
     end
   end
 
-  def apply_quality_rules(item)
-
+  def apply_generic_quality_rules(item)
+    @quality_increment  = @quality_increment_rule.(item)
+    item.quality        = @quality_rule.(item)
   end
 
-  def apply_sell_in_rules(item)
+  def apply_generic_sell_in_rules(item)
+    @sell_in_increment  = @sell_in_increment_rule.(item)
+    item.sell_in        = @sell_in_rule.(item)
+  end
 
+  def generate_rules
+    #Lamdas need to be declared before being used, silly rabbit
+    @quality_increment_rule = ->(item) { (item.sell_in.to_i<0) ? 2 : 1 } #(item.sell_in < 0) ? 2 : 1
+    @sell_in_increment_rule = ->(item) { 1 }
+    @quality_rule = ->(item) { (item.quality.to_i > 0) ? item.quality.to_i - @quality_increment : item.quality.to_i}
+    @sell_in_rule = ->(item) { item.sell_in.to_i - @sell_in_increment }
+    # Item Override rules
+    quality_rule_aged_brie = ->(item) {item.quality = (item.quality < 50) ? item.quality.to_i + @quality_increment.to_i : item.quality} 
+    quality_rule_sulfuras = ->(item) {item.quality = item.quality}
+    sell_in_rule_sulfuras = ->(item) {item.sell_in = item.sell_in}
+    quality_rule_backstage_passes = ->(item) {
+      if item.sell_in < 0
+      item.quality = 0
+      else
+        if(item.sell_in <=10)
+          (item.sell_in <=5) ? 3 : 2
+        end
+        (item.quality < 50) ? item.quality + @quality_increment : item.quality
+      end
+    }
+
+    # Add to hashes
+    quality_rule_overrides = { aged_brie: quality_rule_aged_brie, sulfuras: quality_rule_sulfuras, backstage_passes: quality_rule_backstage_passes }
+    sell_in_rule_overrides = { sulfuras: sell_in_rule_sulfuras }
+    @override_rules = {quality_rules: quality_rule_overrides, sell_in_rules: sell_in_rule_overrides}
+  end
+
+  def quality_exemption?(item)
+    override_rule?(item, 'quality_rules')
+  end
+
+  def sell_in_exemption?(item)
+    override_rule?(item, 'sell_in_rules')
+  end
+
+  def override_rule?(item, rule_set)
+    item_key = item.name.downcase.gsub(' ', '_')
+    if( @override_rules[rule_set.to_sym].has_key?(item_key.to_sym) )
+      @override_rules[rule_set.to_sym][item_key.to_sym].call(item)
+    end
   end
 
 end
