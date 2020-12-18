@@ -63,11 +63,7 @@ class ItemRule
     val = item.quality + rules[:variation][:quality]
     rules[:extra_rules].each do |rule|
       if (item.sell_in <= rule[:sell_in])
-        if( rule[:quality] )
-          val = rule[:quality] + item.quality
-        else
-          val = 0
-        end
+        val = rule[:quality] ? rule[:quality] + item.quality : 0
       end
     end
     val
